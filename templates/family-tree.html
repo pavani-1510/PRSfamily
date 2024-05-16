@@ -1,0 +1,600 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Family Tree</title>
+<style>
+* {margin: 0; padding: 0;}
+
+.tree ul {
+	padding-top: 20px; position: relative;
+
+	transition: all 0.5s;
+	-webkit-transition: all 0.5s;
+	-moz-transition: all 0.5s;
+}
+
+.tree li {
+	float: left; text-align: center;
+	list-style-type: none;
+	position: relative;
+	padding: 20px 5px 0 5px;
+
+	transition: all 0.5s;
+	-webkit-transition: all 0.5s;
+	-moz-transition: all 0.5s;
+}
+
+/*We will use ::before and ::after to draw the connectors*/
+
+.tree li::before, .tree li::after{
+	content: '';
+	position: absolute; top: 0; right: 50%;
+	border-top: 1px solid #ccc;
+	width: 50%; height: 20px;
+}
+.tree li::after{
+	right: auto; left: 50%;
+	border-left: 1px solid #ccc;
+}
+
+/*We need to remove left-right connectors from elements without
+any siblings*/
+.tree li:only-child::after, .tree li:only-child::before {
+	display: none;
+}
+
+/*Remove space from the top of single children*/
+.tree li:only-child{ padding-top: 0;}
+
+/*Remove left connector from first child and
+right connector from last child*/
+.tree li:first-child::before, .tree li:last-child::after{
+	border: 0 none;
+}
+/*Adding back the vertical connector to the last nodes*/
+.tree li:last-child::before{
+	border-right: 1px solid #ccc;
+	border-radius: 0 5px 0 0;
+	-webkit-border-radius: 0 5px 0 0;
+	-moz-border-radius: 0 5px 0 0;
+}
+.tree li:first-child::after{
+	border-radius: 5px 0 0 0;
+	-webkit-border-radius: 5px 0 0 0;
+	-moz-border-radius: 5px 0 0 0;
+}
+
+/*Time to add downward connectors from parents*/
+.tree ul ul::before{
+	content: '';
+	position: absolute; top: 0; left: 50%;
+	border-left: 1px solid #ccc;
+	width: 0; height: 20px;
+}
+
+.tree li a{
+	border: 1px solid #ccc;
+	padding: 5px 10px;
+	text-decoration: none;
+	color: #666;
+	font-family: arial, verdana, tahoma;
+	font-size: 11px;
+	display: inline-block;
+
+	border-radius: 5px;
+	-webkit-border-radius: 5px;
+	-moz-border-radius: 5px;
+
+	transition: all 0.5s;
+	-webkit-transition: all 0.5s;
+	-moz-transition: all 0.5s;
+}
+
+/*Time for some hover effects*/
+/*We will apply the hover effect the the lineage of the element also*/
+.tree li a:hover, .tree li a:hover+ul li a {
+	background: #c8e4f8; color: #000; border: 1px solid #94a0b4;
+}
+/*Connector styles on hover*/
+.tree li a:hover+ul li::after,
+.tree li a:hover+ul li::before,
+.tree li a:hover+ul::before,
+.tree li a:hover+ul ul::before{
+	border-color:  #94a0b4;
+}
+#infoContainer {
+    background-color: #f0f0f0;
+    padding: 10px;
+    margin-bottom: 20px;
+    text-align: center;
+}
+	/* Modal styles */
+.modal {
+    display: none;
+    position: fixed;
+    z-index: 1;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background-color: rgba(0,0,0,0.4);
+}
+
+.modal-content {
+    background-color: #fefefe;
+    margin: 15% auto;
+    padding: 20px;
+    border: 1px solid #888;
+    width: 80%;
+}
+
+.close {
+    color: #aaa;
+    float: right;
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.close:hover,
+.close:focus {
+    color: black;
+    text-decoration: none;
+    cursor: pointer;
+}
+</style>
+</head>
+<body>
+
+<!-- Container for displaying information -->
+<div id="infoContainer">
+
+</div>
+<div class="tree">
+	<ul>
+		<li>
+
+			<a href="#" onclick="showInfo(this)"><img src="{% static 'p1.png' %}" alt="Description of the image" width="140" height="100">
+<div>P.R.Shyamanna</div></a>
+
+			<ul>
+				<li>
+					<a href="#" onclick="showInfo(this)">Manikyamma</a>
+					<ul>
+						<li>
+							<a href="#" onclick="showInfo(this)">P.S.Munirathnam(Kalaiselvi)</a>
+                            <ul>
+								<li>
+									<a href="#" onclick="showInfo(this)">Dr.P.M.Yamini(Dr.Siddartha)</a>
+									<ul>
+
+											<a href="#" onclick="showInfo(this)">Arjun</a>
+                                    </ul>
+								</li>
+                                <li>
+									<a href="#" onclick="showInfo(this)">*P.M.Shyam Prasad*</a>
+
+								</li>
+
+                            </ul>
+						</li>
+                        <li>
+							<a href="#" onclick="showInfo(this)">P.S.Murugesh(*Poongodi*,Yasoda)</a>
+						</li>
+                        <li>
+							<a href="#" onclick="showInfo(this)">Radhamma(Vajjiram)</a>
+                            <ul>
+								<li>
+									<a href="#" onclick="showInfo(this)">Gowry(Sampath)</a>
+									<ul>
+										<li>
+											<a href="#" onclick="showInfo(this)">Manjunatheswaran</a>
+
+										</li>
+										<li>
+											<a href="#" onclick="showInfo(this)">Bhuvaneswari</a>
+
+										</li>
+										<li>
+											<a href="#" onclick="showInfo(this)">Dinesh</a>
+
+										</li>
+                                    </ul>
+								</li>
+                                <li>
+									<a href="#" onclick="showInfo(this)">VaraLakshmi@Amulu()</a>
+									<ul>
+										<li>
+											<a href="#" onclick="showInfo(this)">Kumaran</a>
+
+										</li><li>
+											<a href="#" onclick="showInfo(this)">Karan</a>
+
+										</li>
+                                    </ul>
+								</li>
+                                <li>
+									<a href="#" onclick="showInfo(this)">Karthikeyan(Elizabeth)</a>
+									<ul>
+										<li>
+											<a href="#" onclick="showInfo(this)">Kondraivendan</a>
+
+										</li><li>
+											<a href="#" onclick="showInfo(this)">Devasena</a>
+
+										</li>
+                                    </ul>
+								</li>
+                                <li>
+									<a href="#" onclick="showInfo(this)">Thenmolzy(SivaKumar)</a>
+									<ul>
+										<li>
+											<a href="#" onclick="showInfo(this)">Sowmya</a>
+
+										</li>
+										<li>
+											<a href="#" onclick="showInfo(this)">Pallavi</a>
+
+										</li>
+                                    </ul>
+								</li>
+
+                            </ul>
+						</li>
+                        <li>
+							<a href="#" onclick="showInfo(this)">Maheswari(RamaMurthy)</a>
+                            <ul>
+                                <li>
+									<a href="#" onclick="showInfo(this)">Karunakaran</a>
+
+								</li>
+                                <li>
+									<a href="#" onclick="showInfo(this)">PannerSelvam(Bhavani)</a>
+									<ul>
+										<li>
+											<a href="#" onclick="showInfo(this)">Rupesh</a>
+
+										</li>
+										<li>
+											<a href="#" onclick="showInfo(this)">Nithya</a>
+
+										</li>
+                                    </ul>
+								</li>
+                                <li>
+									<a href="#" onclick="showInfo(this)">Chandrakala(Sendhil)</a>
+									<ul>
+										<li>
+											<a href="#" onclick="showInfo(this)">Mouli</a>
+
+										</li>
+										<li>
+											<a href="#" onclick="showInfo(this)">Dharani</a>
+
+										</li>
+                                    </ul>
+								</li>
+                            </ul>
+						</li>
+                        <li>
+							<a href="#" onclick="showInfo(this)">Kalavathi(SampathKumar)</a>
+                            <ul>
+                                <li>
+									<a href="#" onclick="showInfo(this)">Poornima@Bhuvana(Gopinath)</a>
+									<ul>
+										<li>
+											<a href="#" onclick="showInfo(this)">Yathra</a>
+
+										</li>
+										<li>
+											<a href="#" onclick="showInfo(this)">Srivarshan</a>
+
+										</li>
+                                    </ul>
+								</li>
+                                <li>
+									<a href="#" onclick="showInfo(this)">MaheshKumar</a>
+
+								</li>
+                                <li>
+									<a href="#" onclick="showInfo(this)">LokeshKumar</a>
+
+								</li>
+                            </ul>
+						</li>
+					</ul>
+				</li>
+				<li>
+					<a href="#" onclick="showInfo(this)">Kalamma</a>
+					<ul>
+						<li>
+							<a href="#" onclick="showInfo(this)">Munilakshmi(*Siva Prakash*)</a>
+                            <ul>
+                                <li>
+									<a href="#" onclick="showInfo(this)">RajaSekhar(Sailaja)</a>
+									<ul>
+										<li>
+											<a href="#" onclick="showInfo(this)">Pavani</a>
+
+										</li>
+										<li>
+											<a href="#" onclick="showInfo(this)">Sowmya</a>
+
+										</li>
+                                    </ul>
+								</li>
+                                <li>
+									<a href="#" onclick="showInfo(this)">Amarnath(Anusha)</a>
+                                    <ul>
+										<li>
+											<a href="#" onclick="showInfo(this)">Sirisha@Pandu</a>
+
+										</li>
+										<li>
+											<a href="#" onclick="showInfo(this)">Parthasarathy</a>
+
+										</li>
+                                    </ul>
+								</li>
+                                <li>
+									<a href="#" onclick="showInfo(this)">Lavanya@Latha(M.R.Suresh)</a>
+                                    <ul>
+										<li>
+											<a href="#" onclick="showInfo(this)">Gowtham</a>
+
+										</li>
+										<li>
+											<a href="#" onclick="showInfo(this)">Jahnavi</a>
+
+										</li>
+                                    </ul>
+								</li>
+                            </ul>
+						</li>
+                        <li>
+							<a href="#" onclick="showInfo(this)">P.S.Renukapathi(Nagarathna@Salamma)</a>
+                            <ul>
+                                <li>
+									<a href="#" onclick="showInfo(this)">Divakar(Latha)</a>
+									<ul>
+										<li>
+											<a href="#" onclick="showInfo(this)">Thanvitha</a>
+
+										</li>
+										<li>
+											<a href="#" onclick="showInfo(this)">Hemitha</a>
+
+										</li>
+                                    </ul>
+								</li>
+                                <li>
+									<a href="#" onclick="showInfo(this)">Sailaja(Rajasekhar)</a>
+									<ul>
+										<li>
+											<a href="#" onclick="showInfo(this)">Pavani</a>
+
+										</li>
+										<li>
+											<a href="#" onclick="showInfo(this)">Sowmya</a>
+
+										</li>
+                                    </ul>
+								</li>
+                                <li>
+									<a href="#" onclick="showInfo(this)">Purushotham(BhavyaSri)</a>
+									<ul>
+										<li>
+											<a href="#" onclick="showInfo(this)">Samvidha</a>
+
+										</li>
+										<li>
+											<a href="#" onclick="showInfo(this)">Charvika</a>
+
+										</li>
+                                    </ul>
+								</li>
+                            </ul>
+						</li>
+                        <li>
+							<a href="#" onclick="showInfo(this)">Navaneetha(Shanmugam)</a>
+                            <ul>
+                                <li>
+									<a href="#" onclick="showInfo(this)">Yasoda(Tyagaraj)</a>
+									<ul>
+										<li>
+											<a href="#" onclick="showInfo(this)">Pooja</a>
+
+										</li>
+										<li>
+											<a href="#" onclick="showInfo(this)">Nitish</a>
+
+										</li>
+										<li>
+											<a href="#" onclick="showInfo(this)">Pranathi</a>
+
+										</li>
+                                    </ul>
+								</li>
+                                <li>
+									<a href="#" onclick="showInfo(this)">Pushpa(Renugopal)</a>
+									<ul>
+										<li>
+											<a href="#" onclick="showInfo(this)">Arjun</a>
+
+										</li>
+										<li>
+											<a href="#" onclick="showInfo(this)">Manasa</a>
+
+										</li>
+                                    </ul>
+								</li>
+                                <li>
+									<a href="#" onclick="showInfo(this)">Manjunath(Meenakshi)</a>
+									<ul>
+										<li>
+											<a href="#" onclick="showInfo(this)">Gagandeep</a>
+
+										</li>
+										<li>
+											<a href="#" onclick="showInfo(this)">Jagandeep</a>
+
+										</li>
+                                    </ul>
+								</li>
+                            </ul>
+						</li>
+                        <li>
+							<a href="#" onclick="showInfo(this)">Someswari(Subramani)</a>
+                            <ul>
+                                <li>
+									<a href="#" onclick="showInfo(this)">Radhika(VijayMahendra)</a>
+									<ul>
+										<li>
+											<a href="#" onclick="showInfo(this)">Siddarth</a>
+
+										</li>
+
+                                    </ul>
+								</li>
+                                <li>
+									<a href="#" onclick="showInfo(this)">Revanth(Bhavya)</a>
+									<ul>
+										<li>
+											<a href="#" onclick="showInfo(this)">Dhanshika</a>
+
+										</li>
+                                    </ul>
+								</li>
+                            </ul>
+						</li>
+                        <li>
+							<a href="#" onclick="showInfo(this)">P.S.Shanmugam(Vasantha)</a>
+                            <ul>
+                                <li>
+									<a href="#" onclick="showInfo(this)">Meenakshi(Manjunath)</a>
+									<ul>
+										<li>
+											<a href="#" onclick="showInfo(this)">Gagandeep</a>
+
+										</li>
+										<li>
+											<a href="#" onclick="showInfo(this)">Jagandeep</a>
+
+										</li>
+                                    </ul>
+								</li>
+                                <li>
+									<a href="#" onclick="showInfo(this)">LeelaVinodh(Tamilarasi@Priya)</a>
+
+								</li>
+                            </ul>
+						</li>
+                        <li>
+							<a href="#" onclick="showInfo(this)">Dhanalakshmi(Nagaraju)</a>
+                            <ul>
+                                <li>
+									<a href="#" onclick="showInfo(this)">Devanathan(Anitha)</a>
+									<ul>
+										<li>
+											<a href="#" onclick="showInfo(this)">Himavanth</a>
+
+										</li>
+										<li>
+											<a href="#" onclick="showInfo(this)">Vedhanshika</a>
+
+										</li>
+                                    </ul>
+								</li>
+                                <li>
+									<a href="#" onclick="showInfo(this)">BharathKumar(Niveditha)</a>
+									<ul>
+										<li>
+											<a href="#" onclick="showInfo(this)">Ruthivika</a>
+
+										</li>
+										<li>
+											<a href="#" onclick="showInfo(this)">Chitrika</a>
+
+										</li>
+                                    </ul>
+								</li>
+                            </ul>
+						</li>
+                        <li>
+							<a href="#" onclick="showInfo(this)">P.S.Chokkalingam(Dr.MadhuLatha)</a>
+						</li>
+					</ul>
+				</li>
+			</ul>
+		</li>
+	</ul>
+</div>
+<a href="{% url 'user' %}" class="button">Back to Home</a>
+<div id="myModal" class="modal">
+    <div class="modal-content">
+        <span class="close" onclick="closeModal()">&times;</span>
+        <p id="modalText"></p>
+    </div>
+</div>
+
+
+
+<script>
+// Function to fetch information about the person
+function getPersonInfo(personName) {
+    // You can implement logic here to fetch information about the person
+    // from your database or any other data source
+
+    // For this example, let's define a dictionary mapping person names to their descriptions
+    var descriptions = {
+        "P.R.Shyamanna": "Description of P.R.Shyamanna",
+        "Manikyamma": "Description of Manikyamma",
+        // Add more descriptions as needed
+    };
+
+    // Check if the person's description is available
+    if (descriptions.hasOwnProperty(personName.trim())) {
+        return descriptions[personName.trim()];
+    } else {
+        return "Description not available for " + personName;
+    }
+}
+
+// Function to display information when a person is clicked
+function showInfo(element) {
+    // Retrieve the text content of the clicked link
+    var personName = element.textContent.trim();
+
+    // Fetch the description of the person
+    var personInfo = getPersonInfo(personName);
+
+    // Display the information in the modal
+    showModal(personName);
+}
+
+// Function to display information in a custom pop-up modal
+function showModal(personName) {
+    // Fetch the description of the person
+    var personInfo = getPersonInfo(personName);
+
+    // Set the text content of the modal
+    document.getElementById("modalText").textContent = personInfo;
+
+    // Show the modal
+    var modal = document.getElementById("myModal");
+    modal.style.display = "block";
+}
+
+// Function to close the modal
+function closeModal() {
+    var modal = document.getElementById("myModal");
+    modal.style.display = "none";
+}
+</script>
+
+
+</body>
+</html>

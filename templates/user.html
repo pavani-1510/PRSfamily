@@ -1,0 +1,84 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Home Page</title>
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+         .btn-danger {
+            background-color: #dc3545; /* Red button background color */
+            border-color: #dc3545; /* Red button border color */
+        }
+        .btn-danger:hover {
+            background-color: #c82333; /* Darker shade on hover */
+            border-color: #bd2130; /* Darker shade on hover */
+        }.btn {
+            margin: 5px; /* Add margin around buttons */
+            border-radius: 20px; /* Add border radius */
+            padding: 10px 20px; /* Add padding */
+            font-size: 18px; /* Increase font size */
+        }
+        .btn-primary {
+            background-color: #007bff; /* Blue button background color */
+            border-color: #007bff; /* Blue button border color */
+        }
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            background: linear-gradient(135deg, #FF76CE, #94FFD8);
+            font-family: 'Roboto', sans-serif;
+            margin: 0;
+        }
+        .container {
+            text-align: center;
+            background: rgba(255, 255, 255, 0.9);
+            padding: 40px;
+            border-radius: 15px;
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+            max-width: 400px;
+        }
+        h1 {
+            margin-bottom: 20px;
+            font-size: 2.5em;
+            color: #333;
+        }
+        .button {
+            display: inline-block;
+            margin: 10px;
+            padding: 15px 30px;
+            font-size: 18px;
+            font-weight: 700;
+            color: #fff;
+            background-color: #8576FF;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        .button:hover {
+            background-color: #6b5bff;
+            transform: translateY(-3px);
+        }
+        img {
+            margin-bottom: 20px;
+            border-radius: 50%;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="{% static 'logo.png' %}" alt="Logo" width="100" height="100">
+        <h1>Welcome</h1>
+                <a href="{% url 'logout' %}" class="btn btn-danger">Logout</a>
+        <a href="{% url 'familytree' %}" class="button">Family Tree</a>
+                <a href="{% url 'event_list' %}" class="button">Events</a>
+
+    </div>
+</body>
+</html>
