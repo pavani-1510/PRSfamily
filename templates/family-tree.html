@@ -7,14 +7,36 @@
 <title>Family Tree</title>
 <style>
 * {margin: 0; padding: 0;}
-
+.tree {
+    overflow-x: auto; /* Add this line to enable horizontal scrolling */
+    width: 100%; /* Adjust this width as needed */
+}
 .tree ul {
+display: inline-flex;
 	padding-top: 20px; position: relative;
 
 	transition: all 0.5s;
 	-webkit-transition: all 0.5s;
 	-moz-transition: all 0.5s;
 }
+.button {
+            display: inline-block;
+            margin: 10px;
+            padding: 15px 30px;
+            font-size: 18px;
+            font-weight: 700;
+            color: #fff;
+            background-color: #8576FF;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            text-decoration: none;
+            transition: background-color 0.3s, transform 0.3s;
+        }
+        .button:hover {
+            background-color: #6b5bff;
+            transform: translateY(-3px);
+        }
 
 .tree li {
 	float: left; text-align: center;
@@ -296,7 +318,7 @@ right connector from last child*/
                                     </ul>
 								</li>
                                 <li>
-									<a href="#" onclick="showInfo(this)">MaheshKumar</a>
+									<a href="#" onclick="showInfo(this)">MaheshKumar(Bhavya)</a>
 
 								</li>
                                 <li>
@@ -471,7 +493,7 @@ right connector from last child*/
                             </ul>
 						</li>
                         <li>
-							<a href="#" onclick="showInfo(this)">P.S.Shanmugam(Vasantha)</a>
+							<a href="#" onclick="showInfo(this)">*P.S.Shanmugam*(Vasantha)</a>
                             <ul>
                                 <li>
 									<a href="#" onclick="showInfo(this)">Meenakshi(Manjunath)</a>
@@ -550,9 +572,87 @@ function getPersonInfo(personName) {
 
     // For this example, let's define a dictionary mapping person names to their descriptions
     var descriptions = {
-        "P.R.Shyamanna": "Description of P.R.Shyamanna",
-        "Manikyamma": "Description of Manikyamma",
-        // Add more descriptions as needed
+    "P.R.Shyamanna": "Description of P.R.Shyamanna",
+    "Manikyamma": "Description of Manikyamma",
+    "P.S.Munirathnam(Kalaiselvi)": "Occupation - Politics, Year of birth - 1952",
+    "Dr.P.M.Yamini(Dr.Siddartha)": "Occupation - Doctor, Year of birth - 1984",
+    "Arjun": "Student, Year of birth - 2014",
+    "*P.M.Shyam Prasad*": "Description of P.M.Shyam Prasad",
+    "P.S.Murugesh(*Poongodi*,Yasoda)": "Occupation - Agriculture, Year of birth - 1957",
+    "Radhamma(Vajjiram)": "Occupation - House Wife, Year of birth - 1961",
+    "Gowry(Sampath)": "Occupation - House Wife, Year of birth - 1957",
+    "Manjunatheswaran": "Student",
+    "Bhuvaneswari": "Student",
+    "Dinesh": "Student",
+    "VaraLakshmi@Amulu()": "Occupation - House Wife",
+    "Kumaran": "Student",
+    "Karan": "Student",
+    "Karthikeyan(Elizabeth)": "Occupation - Lawyer",
+    "Kondraivendan": "Student",
+    "Devasena": "Student",
+    "Thenmolzy(SivaKumar)": "Occupation - House Wife",
+    "Sowmya": "Student",
+    "Pallavi": "Student",
+    "Maheswari(RamaMurthy)": "Occupation - House Wife, Year of birth - 1963",
+    "Karunakaran": "Occupation - Agriculture",
+    "PannerSelvam(Bhavani)": "Occupation - Agriculture",
+    "Rupesh": "Student, Year of birth - 2015",
+    "Nithya": "Student, Year of birth - 2018",
+    "Chandrakala(Sendhil)": "Occupation - House Wife",
+    "Mouli": "Student",
+    "Dharani": "Student",
+    "Kalavathi(SampathKumar)": "Occupation - House Wife, Year of birth - 1967",
+    "Poornima@Bhuvana(Gopinath)": "Occupation - House Wife",
+    "Yathra": "Student",
+    "Srivarshan": "Student",
+    "MaheshKumar(Bhavya)": "Occupation - Service, Year of birth - 1987",
+    "LokeshKumar": "Occupation - Service, Year of birth - 1989",
+    "Kalamma": "1940-2020",
+    "Munilakshmi(*Siva Prakash*)": "Occupation - House Wife, Year of birth - 1957",
+    "RajaSekhar(Sailaja)": "Occupation - Politics, Year of birth - 1975",
+    "Pavani": "Student, Year of birth - 2005",
+    "Sowmya": "Student, Year of birth - 2009",
+    "Amarnath(Anusha)": "Occupation - Agriculture, Year of birth - 1977",
+    "Sirisha@Pandu": "Student, Year of birth - 2005",
+    "Parthasarathy": "Student, Year of birth - 2012",
+    "Lavanya@Latha(M.R.Suresh)": "Occupation - House Wife, Year of birth - 1979",
+    "Gowtham": "Student, Year of birth - 2000",
+    "Jahnavi": "Student, Year of birth - 2003",
+    "P.S.Renukapathi(Nagarathna@Salamma)": "Occupation - Agriculture, Year of birth - 1959",
+    "Divakar(Latha)": "Occupation - Business, Year of birth - 1985",
+    "Thanvitha": "Student, Year of birth - 2015",
+    "Hemitha": "Student, Year of birth - 2019",
+    "Sailaja(Rajasekhar)": "Occupation - House Wife, Year of birth - 1987",
+    "Purushotham(BhavyaSri)": "Occupation - Service, Year of birth - 1989",
+    "Samvidha": "Student, Year of birth - 2017",
+    "Charvika": "Year of birth -2022",
+    "Navaneetha(Shanmugam)": "Occupation - House Wife, Year of birth - 1961",
+    "Yasoda(Tyagaraj)": "Occupation - Service, Year of birth - 1979",
+    "Pooja": "Student, Year of birth - 2003",
+    "Nitish": "Student, Year of birth - 2006",
+    "Pranathi": "Student, Year of birth - 2008",
+    "Pushpa(Renugopal)": "Occupation - House Wife, Year of birth - 1981",
+    "Arjun": "Student, Year of birth - 2004",
+    "Manasa": "Student, Year of birth - 2009",
+    "Manjunath(Meenakshi)": "Occupation - Business, Year of birth - 1983",
+    "Gagandeep": "Student, Year of birth - 2011",
+    "Jagandeep": "Student, Year of birth - 2017",
+    "Someswari(Subramani)": "Occupation - House Wife, Year of birth - 1963",
+    "Radhika(VijayMahendra)": "Occupation - Academics, Year of birth - 1984",
+    "Siddarth": "Student, Year of birth - 2018",
+    "Revanth(Bhavya)": "Occupation - Service, Year of birth - 1985",
+    "Dhanshika": "Student, Year of birth - 2020",
+    "*P.S.Shanmugam*(Vasantha)": "Year of birth - 1965",
+    "Meenakshi(Manjunath)": "Occupation - House Wife, Year of birth - 1990",
+    "LeelaVinodh(Tamilarasi@Priya)": "Occupation - Service, Year of birth - 1993",
+    "Dhanalakshmi(Nagaraju)": "Occupation - House Wife, Year of birth - 1967",
+    "Devanathan(Anitha)": "Occupation - Service, Year of birth - 1988",
+    "Himavanth": "Student, Year of birth - 2020",
+    "Vedhanshika": "Year of birth -2024",
+    "BharathKumar(Niveditha)": "Occupation - Service, Year of birth - 1989",
+    "Ruthivika": "Student, Year of birth - 2020",
+    "Chitrika": "Year of birth -2024",
+    "P.S.Chokkalingam(Dr.MadhuLatha)":" Occupation - Academics, Year of birth - 1971",
     };
 
     // Check if the person's description is available

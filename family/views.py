@@ -34,6 +34,23 @@ def logout(request):
     request.session.flush()
     return redirect('login')
 
+# views.py
+
+from django.shortcuts import render, redirect
+from django.contrib.auth import login as auth_login
+from .forms import SignUpForm
+
+def signup(request):
+    if request.method == 'POST':
+        form = SignUpForm(request.POST)
+        if form.is_valid():
+            user = form.save()
+            auth_login(request, user)
+            return redirect('user')  # Redirect to a success page.
+    else:
+        form = SignUpForm()
+    return render(request, 'signup.html', {'form': form})
+
 @login_required
 def user(request):
     if 'name' in request.session:
@@ -112,4 +129,5 @@ def add_event(request):
     else:
         form = EventForm()
     return render(request, 'add_event.html', {'form': form})
+
 
